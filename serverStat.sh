@@ -58,12 +58,11 @@ get_memory_usage(){
 
 get_disk_usage(){
     echo "--- DISK USAGE ---"
-    df -h --total | awk 'NR=2 {
-        printf "Filesystem: %s\n", $1
-        printf "Size:       %s\n", $2
+    df -h --total | awk '/total/ {
+        printf "Total Size: %s\n", $2
         printf "Used:       %s\n", $3
         printf "Available:  %s\n", $4
-        printf "Use%%:      %s\n", $5
+        printf "Use%%:       %s\n", $5
     }'
 }
 
