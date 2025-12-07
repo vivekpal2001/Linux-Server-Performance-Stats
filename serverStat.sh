@@ -14,7 +14,7 @@ get_os_info(){
     echo "--- Operating System Information ---"
     
     if [ -f /etc/os-release ]; then
-        . .etc/os-release
+        . /etc/os-release
         echo "Distribution: $PRETTY_NAME"
     fi
     echo "Kernel Version: $(uname -r)"
@@ -58,7 +58,7 @@ get_memory_usage(){
 
 get_disk_usage(){
     echo "--- DISK USAGE ---"
-    df -h --total | awk 'NR==1 || /total/ {
+    df -h --total | awk '/total/ {
         printf "Filesystem: %s\n", $1
         printf "Size:       %s\n", $2
         printf "Used:       %s\n", $3
