@@ -1,12 +1,5 @@
 #!/bin/bash
-# A simple script to display server statistics
-#################################################
-# Server Performance Statistics Script
-# Description: Collects and displays server stats
-# Author: Vivek Pal
-# Date: December 2025
-# Version: 1.0
-#################################################
+
 
 display_header(){
     echo "======================================"
@@ -99,10 +92,16 @@ get_uptime_info(){
 
 get_failed_attempts(){
     echo "--- FAILED LOGIN ATTEMPTS (Last 24 hours) ---"
-    lastb -s -1days | awk '{print $1, $3, $4, $5, $6, $7}' | head -n 10
+    
+    if sudo -n lastb -s -1days &>/dev/null; then
+        sudo lastb -s -1days | awk '{print $1, $3, $4, $5, $6, $7}' | head -n 10
+    else
+        echo "Note: Requires sudo privileges to view failed login attempts."
+        echo "Run with: sudo ./serverStat.sh"
+    fi
 }
 
-# Main function to display all stats
+
 main(){
     display_header
     echo
